@@ -469,7 +469,7 @@ sub monitoring_modify($) {
   ;
 
   my $listFuncAdded = AttrVal($SELF, $list."FuncAdded", "");
-  $listFuncAdd = $listFuncAdd =~ /^\{.*\}$/s ? eval($listFuncAdd) : fhem($listFuncAdd);
+  $listFuncAdded = $listFuncAdded =~ /^\{.*\}$/s ? eval($listFuncAdded) : fhem($listFuncAdded);
 
 
   readingsBeginUpdate($hash);
