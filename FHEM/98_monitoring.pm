@@ -60,6 +60,7 @@ sub monitoring_Initialize($) {
     "disable:1,0 ".
     "disabledForIntervals ".
     "errorFuncAdd:textField-long ".
+    "errorFuncAdded:textField-long ".
     "errorFuncRemove:textField-long ".
     "errorWait ".
     "errorReturn:textField-long ".
@@ -67,6 +68,7 @@ sub monitoring_Initialize($) {
     "setActiveFunc:textField-long ".
     "setInactiveFunc:textField-long ".
     "warningFuncAdd:textField-long ".
+    "warningFuncAdded:textField-long ".
     "warningFuncRemove:textField-long ".
     "warningWait ".
     "warningReturn:textField-long ".
@@ -465,6 +467,10 @@ sub monitoring_modify($) {
     int(keys %readings) +
     ReadingsNum($SELF, ($list eq "warning" ? "error" : "warning")."Count", 0)
   ;
+
+  my $listFuncAdded = AttrVal($SELF, $list."FuncAdded", "");
+  $listFuncAdd = $listFuncAdd =~ /^\{.*\}$/s ? eval($listFuncAdd) : fhem($listFuncAdd);
+
 
   readingsBeginUpdate($hash);
   readingsBulkUpdate($hash, "state", "$list $operation: $value");
