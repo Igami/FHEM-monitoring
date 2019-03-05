@@ -468,10 +468,12 @@ sub monitoring_modify($) {
     ReadingsNum($SELF, ($list eq "warning" ? "error" : "warning")."Count", 0)
   ;
 
-  my $listFuncAdded = AttrVal($SELF, $list."FuncAdded", "");
-  $listFuncAdded = $listFuncAdded =~ /^\{.*\}$/s ? eval($listFuncAdded) : fhem($listFuncAdded);
-
-
+  if ($operation eq "add") {
+    my $name = $value;
+    my $listFuncAdded = AttrVal($SELF, $list."FuncAdded", "");
+    $listFuncAdded = $listFuncAdded =~ /^\{.*\}$/s ? eval($listFuncAdded) : fhem($listFuncAdded);
+  }
+  
   readingsBeginUpdate($hash);
   readingsBulkUpdate($hash, "state", "$list $operation: $value");
   readingsBulkUpdate($hash, $list, join(",", sort(keys %readings)));
