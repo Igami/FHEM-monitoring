@@ -473,7 +473,7 @@ sub monitoring_modify($) {
     my $listFuncAdded = AttrVal($SELF, $list."FuncAdded", "");
     $listFuncAdded = $listFuncAdded =~ /^\{.*\}$/s ? eval($listFuncAdded) : fhem($listFuncAdded);
   }
-  
+
   readingsBeginUpdate($hash);
   readingsBulkUpdate($hash, "state", "$list $operation: $value");
   readingsBulkUpdate($hash, $list, join(",", sort(keys %readings)));
@@ -793,6 +793,22 @@ sub monitoring_setInactive($) {
         <code>$addMatch</code>.
       </li>
       <li>
+        <code>errorFuncAdded {&lt;perl code&gt;}</code><br>
+        The following variables are available in this function:
+        <br>
+        <ul>
+          <li>
+            <code>$name</code><br>
+            Name of the event triggering device
+          </li>
+          <li>
+            <code>$SELF</code><br>
+            Name of the monitoring
+          </li>
+        </ul>
+        This function will be executed when a device is added to the error list.
+      </li>
+      <li>
         <code>errorFuncRemove {&lt;perl code&gt;}</code><br>
         This function provides the same variables as for "errorFuncAdd".<br>
         If the function returns a 1, the device is removed from the error list
@@ -842,6 +858,10 @@ sub monitoring_setInactive($) {
       <li>
         <code>warningFuncAdd {&lt;perl code&gt;}</code><br>
         Like errorFuncAdd, just for the warning list.
+      </li>
+      <li>
+        <code>warningFuncAdd {&lt;perl code&gt;}</code><br>
+        Like errorFuncAdded, just for the warning list.
       </li>
       <li>
         <code>warningFuncRemove {&lt;perl code&gt;}</code><br>
@@ -1279,6 +1299,22 @@ attr BeamerFilter_monitoring warningFuncRemove {return}</pre>
         gepr&uuml;ft.
       </li>
       <li>
+        <code>errorFuncAdded {&lt;perl code&gt;}</code><br>
+        In dieser Funktion stehen die folgende Variablen zur Verf&uuml;gung:
+        <br>
+        <ul>
+          <li>
+            <code>$name</code><br>
+            Name des Event ausl&ouml;senden Ger&auml;tes
+          </li>
+          <li>
+            <code>$SELF</code><br>
+            Eigenname des monitoring
+          </li>
+        </ul>
+        Diese Funktion wird ausgeführt, wenn ein Gerät in die Fehlerliste aufgenommen wird.
+      </li>
+      <li>
         <code>errorFuncRemove {&lt;perl code&gt;}</code><br>
         In dieser Funktion stehen die selben Variablen wie bei "errorFuncAdd"
         zur Verf&uuml;gung.<br>
@@ -1330,6 +1366,10 @@ attr BeamerFilter_monitoring warningFuncRemove {return}</pre>
       <li>
         <code>warningFuncAdd {&lt;perl code&gt;}</code><br>
         Wie errorFuncAdd, nur f&uuml;r die warning-Liste.
+      </li>
+      <li>
+        <code>warningFuncAdded {&lt;perl code&gt;}</code><br>
+        Wie errorFuncAdded, nur f&uuml;r die warning-Liste.
       </li>
       <li>
         <code>warningFuncRemove {&lt;perl code&gt;}</code><br>
